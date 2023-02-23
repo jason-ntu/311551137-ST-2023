@@ -14,28 +14,22 @@ class Test(unittest.TestCase):
     def test_0_set_name(self):
         print('Start set_name test\n')
         for name in self.user_name:
-            curId = self.students.set_name(name)
-            print(curId, name)
-            self.assertNotIn(curId, self.user_id)
-            self.user_id.append(curId)
+            self.user_id.append(self.students.set_name(name))
+            print(self.user_id[-1], name)
+            self.assertNotIn(self.user_id[-1], self.user_id[:-1])
         self.assertEqual(len(self.user_name), len(self.user_id))
         print('\nFinish set_name test\n')
 
     # test case function to check the Students.get_name function
     def test_1_get_name(self):
-        print('Start get_name test\n')
-        print('user_id length = ', len(self.user_id))
-        print('user_name length = ', len(self.user_name), '\n')
+        print('Start get_name test\n\nuser_id length = %d\nuser_name length = %d\n' %
+              (len(self.user_id), len(self.user_name)))
         self.assertEqual(len(self.user_name), len(self.user_id))
+        for i, id in enumerate(self.user_id):
+            print('id', id, ':', self.students.get_name(id))
+            self.assertEqual(self.students.get_name(id), self.user_name[i])
         mex = 0
         while (mex in self.user_id):
             mex += 1
-        self.user_id.append(mex)
-        self.user_name.append('There is no such user')
-        for i in range(len(self.user_id)):
-            name = self.students.get_name(self.user_id[i])
-            print('id', self.user_id[i], ':', name)
-            self.assertEqual(name, self.user_name[i])
-        self.user_id.pop()
-        self.user_name.pop()
+        self.assertEqual(self.students.get_name(mex), 'There is no such user')
         print('\nFinish get_name test')
