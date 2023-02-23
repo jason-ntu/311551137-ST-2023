@@ -20,7 +20,6 @@ class Test(unittest.TestCase):
             self.user_id.append(curId)
         self.assertEqual(len(self.user_name), len(self.user_id))
         print('\nFinish set_name test\n')
-        pass
 
     # test case function to check the Students.get_name function
     def test_1_get_name(self):
@@ -40,36 +39,3 @@ class Test(unittest.TestCase):
         self.user_id.pop()
         self.user_name.pop()
         print('\nFinish get_name test')
-        pass
-
-
-# if __name__ == '__main__':
-#     # Create a test suite from your tests
-#     suite = unittest.TestLoader().loadTestsFromTestCase(Test)
-
-#     # Create a TextTestRunner and redirect the output to the console
-#     # runner = unittest.TextTestRunner(stream=sys.stdout, verbosity=2)
-#     runner = unittest.TextTestRunner(stream=sys.stdout, buffer=True)
-
-#     # Run the test suite and capture the result
-#     result = runner.run(suite)
-
-#     # Print the contents of the buffer
-#     print(result.buffer.getvalue())
-
-
-# if __name__ == '__main__':
-#     # Create a test suite from your tests
-#     suite = unittest.TestLoader().loadTestsFromTestCase(Test)
-
-#     # Create an in-memory buffer
-#     buffer = io.StringIO()
-
-#     # Create a TextTestRunner and redirect the output to the buffer
-#     runner = unittest.TextTestRunner(stream=buffer)
-
-#     # Run the test suite
-#     result = runner.run(suite)
-
-#     # Print the contents of the buffer
-#     print(buffer.getvalue())

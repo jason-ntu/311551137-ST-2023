@@ -1,0 +1,5 @@
+./vscode
+
+Lab01/.coverage
+Lab01/htmlcov/
+Lab01/__pycache__/
