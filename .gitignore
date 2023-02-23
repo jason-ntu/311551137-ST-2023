@@ -1,5 +1,5 @@
 ./vscode
 
-Lab01/.coverage
-Lab01/htmlcov/
-Lab01/__pycache__/
+*/.coverage
+*/htmlcov/
+*/__pycache__/

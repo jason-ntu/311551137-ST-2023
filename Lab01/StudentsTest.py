@@ -1,7 +1,5 @@
 import unittest
 import Students
-import sys
-import io
 
 
 class Test(unittest.TestCase):

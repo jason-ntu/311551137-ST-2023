@@ -7,7 +7,7 @@ run:
 	@coverage run -m unittest $(FILE_NAME)
 
 report: .coverage
-	@coverage report -m
+	@coverage report
 	@coverage html
 
 clean:
