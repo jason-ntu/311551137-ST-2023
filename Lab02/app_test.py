@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, mock_open, Mock
+from unittest.mock import patch, mock_open
 from app import Application
 
 
@@ -30,7 +30,7 @@ class ApplicationTest(unittest.TestCase):
     @patch("app.Application.get_random_person")
     def test_app(self, mock_get_random_person, spy_write, spy_send):
         # mock
-        mock_get_random_person.side_effect = self.stub.people
+        mock_get_random_person.side_effect = self.application.people
         alreadySelected = self.application.selected[:]
         person = self.application.select_next_person()
         print(person + ' selected')
