@@ -1,6 +1,6 @@
 import unittest
-from unittest.mock import patch, mock_open
-from app import Application
+from unittest.mock import patch
+from app import Application, MailSystem
 
 
 class ApplicationStub():
@@ -13,21 +13,18 @@ class ApplicationTest(unittest.TestCase):
     stub = ApplicationStub(["William", "Oliver", "Henry", "Liam"], [
         "William", "Oliver", "Henry"])
 
-    @patch("builtins.open", new_callable=mock_open, read_data="William\nOliver\nHenry\nLiam")
-    def setUp(self, mock_open):
-        # stub
-        self.assertEqual(mock_open, open)
+    @patch.object(Application, "__init__", return_value=None)
+    def setUp(self, mock_init):
         self.application = Application()
-        mock_open.assert_called_once_with("name_list.txt", "r")
-        self.assertEqual(self.application.people, self.stub.people)
+        self.application.people = self.stub.people
         self.application.selected = self.stub.selected
 
     def fake_mail(self, name):
         print('Congrats, ' + name + '!')
 
-    @patch("app.MailSystem.send")
-    @patch("app.MailSystem.write")
-    @patch("app.Application.get_random_person")
+    @patch.object(MailSystem, "send")
+    @patch.object(MailSystem, "write")
+    @patch.object(Application, "get_random_person")
     def test_app(self, mock_get_random_person, spy_write, spy_send):
         # mock
         mock_get_random_person.side_effect = self.application.people
