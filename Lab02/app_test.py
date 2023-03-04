@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from app import Application, MailSystem
+import app
 
 
 class ApplicationStub():
@@ -13,18 +13,18 @@ class ApplicationTest(unittest.TestCase):
     stub = ApplicationStub(["William", "Oliver", "Henry", "Liam"], [
         "William", "Oliver", "Henry"])
 
-    @patch.object(Application, "__init__", return_value=None)
+    @patch.object(app.Application, "__init__", return_value=None)
     def setUp(self, mock_init):
-        self.application = Application()
+        self.application = app.Application()
         self.application.people = self.stub.people
         self.application.selected = self.stub.selected
 
-    def fake_mail(self, name):
+    def fake_mail(self, name, context):
         print('Congrats, ' + name + '!')
 
-    @patch.object(MailSystem, "send")
-    @patch.object(MailSystem, "write")
-    @patch.object(Application, "get_random_person")
+    @patch.object(app.MailSystem, "send")
+    @patch.object(app.MailSystem, "write")
+    @patch.object(app.Application, "get_random_person")
     def test_app(self, mock_get_random_person, spy_write, spy_send):
         # mock
         mock_get_random_person.side_effect = self.application.people
@@ -34,7 +34,7 @@ class ApplicationTest(unittest.TestCase):
         self.assertNotIn(person, alreadySelected)
 
         # spy
-        spy_write.side_effect = self.fake_mail
+        spy_send.side_effect = self.fake_mail
         self.application.notify_selected()
         self.assertEqual(spy_write.call_count, len(self.stub.selected))
         self.assertEqual(spy_send.call_count, len(self.stub.selected))
