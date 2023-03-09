@@ -20,10 +20,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Lint with flake8
+      - name: Lint with flake8 and test with unittest
         run: |
-          flake8 ./Lab03/calculator_test.py
-      - name: Test with unittest
-        run: |
-          cd 
-          python3 -m unittest ./Lab03/calculator_test.py -v
+          cd Lab03
+          make run

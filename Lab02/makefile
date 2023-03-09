@@ -4,8 +4,8 @@ CACHE := ./__pycache__
 .PHONY: clean
 
 run:
-	@python3 -m unittest app_test.py 2>/dev/null
-	@python3 -m unittest app_test.py -b -v
+	@python3 -m unittest $(FILE_NAME) 2>/dev/null
+	@python3 -m unittest $(FILE_NAME) -b -v
 
 clean:
 	@$(RM) -r $(CACHE)
