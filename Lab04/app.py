@@ -5,11 +5,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 myStudentID = "311551137"
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-wait = WebDriverWait(driver, 2)
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--window-size=1920,1080')
+options.add_argument('--disable-gpu')
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
+                          options=options)
+wait = WebDriverWait(driver, 5)
 
 driver.get("https://www.nycu.edu.tw/")
 
@@ -40,7 +46,7 @@ search_box.send_keys(myStudentID)
 search_box.send_keys(Keys.RETURN)
 
 second_title = wait.until(EC.presence_of_element_located((
-    By.XPATH, '//div[@class = "v7W49e"]/div[2]/div/div/div/div/a/h3')))
+    By.XPATH, '//div[@id="search"]/div/div/div[2]/div/div/div/div/a/h3')))
 print(second_title.text)
 
 driver.close()
