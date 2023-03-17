@@ -9,44 +9,39 @@ import time
 
 myStudentID = "311551137"
 
-# launch browser
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-# navigate to NYCU home page(https://www.nycu.edu.tw/)
 driver.get("https://www.nycu.edu.tw/")
 
-# maximize the window
 driver.maximize_window()
 
-# click 新聞
-driver.find_element(By.LINK_TEXT, '新聞').click()
+news = driver.find_element(By.LINK_TEXT, '新聞')
+news.click()
 
-# click first new
-driver.find_element(By.XPATH, '//li[@class="su-post"]/a[1]').click()
+first_news = driver.find_element(By.XPATH, '//li[@class="su-post"]/a[1]')
+first_news.click()
 
-# print the title and content
-print(driver.find_element(
-    By.XPATH, '//header[@class="entry-header clr"]/h1').text)
+title = driver.find_element(
+    By.XPATH, '//header[@class="entry-header clr"]/h1')
 contents = driver.find_elements(
     By.XPATH, '//div[@class="entry-content clr"]/p')
+print("Title:")
+print(title.text)
+print("Contents:")
 for content in contents:
     print(content.text)
 
-# open a new tab and switch to it
 driver.switch_to.new_window('tab')
+WebDriverWait(driver, 2).until(EC.new_window_is_opened)
 
-# navigate to google
 driver.get("https://www.google.com")
 
-# input your student number and submit
 search_box = driver.find_element(By.NAME, 'q')
 search_box.send_keys(myStudentID)
 search_box.send_keys(Keys.RETURN)
 
-# print the title of second result
-WebDriverWait(driver, 5).until(EC.new_window_is_opened)
-print(driver.find_element(
-    By.XPATH, '//div[@class = "v7W49e"]/div[2]/div/div/div/div/a/h3').text)
+second_title = driver.find_element(
+    By.XPATH, '//div[@class = "v7W49e"]/div[2]/div/div/div/div/a/h3')
+print(second_title.text)
 
-# close the browser
 driver.close()
