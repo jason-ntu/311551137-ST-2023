@@ -55,7 +55,8 @@ bool LabPass::runOnModule(Module &M) {
   LLVMContext &ctx = M.getContext();
   FunctionCallee printfCallee = printfPrototype(M);
 
-  Constant* emptyStr = ConstantDataArray::getString(ctx, "");
+  // Constant* space = ConstantDataArray::getString(ctx, " ");
+  Constant* space = ConstantInt::get(Type::getInt32Ty(ctx), ' ');
   Constant* zero = ConstantInt::getSigned(Type::getInt32Ty(ctx), 0);
   Constant* one = ConstantInt::getSigned(Type::getInt32Ty(ctx), 1);
 
@@ -77,12 +78,17 @@ bool LabPass::runOnModule(Module &M) {
     BuilderStart.CreateStore(newDepth, depth);
 
     // Get function name and address
-    StringRef funcName = F.getName();
+    std::string funcName = F.getName().str();
     Value *funcAddr = BuilderStart.CreatePtrToInt(&F, Type::getInt64Ty(ctx));
 
     // Print message
-    Constant *msg = getI8StrVal(M, ("%*c" + funcName + ": %p\n").str().c_str(), "msg");
-    BuilderStart.CreateCall(printfCallee, { msg, newDepth, emptyStr, funcAddr });
+    if (funcName == (std::string) "main") {
+      Constant *msg = getI8StrVal(M, (funcName + ": %p\n").c_str(), "msg");
+      BuilderStart.CreateCall(printfCallee, { msg, funcAddr });
+    } else {
+      Constant *msg = getI8StrVal(M, ("%*c" + funcName + ": %p\n").c_str(), "msg");
+      BuilderStart.CreateCall(printfCallee, { msg, oldDepth, space, funcAddr });
+    }
 
     // Create epilogue BB before ret BB
     BasicBlock &Bend = F.back();
