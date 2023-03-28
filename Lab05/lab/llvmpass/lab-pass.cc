@@ -78,16 +78,15 @@ bool LabPass::runOnModule(Module &M) {
     BuilderStart.CreateStore(newDepth, depth);
 
     // Get function name and address
-    std::string funcName = F.getName().str();
-    Value *funcAddr = BuilderStart.CreatePtrToInt(&F, Type::getInt64Ty(ctx));
+    std::string funcName = F.getName().str().c_str();
 
     // Print message
     if (funcName == (std::string) "main") {
       Constant *msg = getI8StrVal(M, (funcName + ": %p\n").c_str(), "msg");
-      BuilderStart.CreateCall(printfCallee, { msg, funcAddr });
+      BuilderStart.CreateCall(printfCallee, { msg, &F });
     } else {
       Constant *msg = getI8StrVal(M, ("%*c" + funcName + ": %p\n").c_str(), "msg");
-      BuilderStart.CreateCall(printfCallee, { msg, oldDepth, space, funcAddr });
+      BuilderStart.CreateCall(printfCallee, { msg, oldDepth, space, &F });
     }
 
     // Create epilogue BB before ret BB
