@@ -78,7 +78,7 @@ bool LabPass::runOnModule(Module &M) {
     BuilderStart.CreateStore(newDepth, depth);
 
     // Get function name and address
-    std::string funcName = F.getName().str().c_str();
+    std::string funcName = F.getName().str();
 
     // Print message
     if (funcName == (std::string) "main") {
