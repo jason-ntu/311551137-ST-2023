@@ -33,7 +33,7 @@ class BoundedQueue:
 	
 	def dequeue(self):
 		if self.size == 0:
-			raise RuntimeError('BoundedQueue.enqueue')
+			raise RuntimeError('BoundedQueue.dequeue')
 		else:
 			self.size -= 1
 			o = self.elements[self.front % self.capacity]

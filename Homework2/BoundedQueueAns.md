@@ -28,41 +28,36 @@ Assume the usual semantics for a queue with a fixed, maximal capacity. Try to ke
 
 | Ch ID |    Characteristic     | BoundedQueue | enqueue | dequeue | is_empty | is_full |
 | :---: | :-------------------: | :----------: | :-----: | :-----: | :------: | :-----: |
-|  C1   |     capacity >= 0     |      v       |    v    |    v    |    v     |    v    |
+|  C1   |     capacity >= 0     |      v       |         |         |          |         |
 |  C2   | input non null object |              |    v    |    v    |          |         |
 |  C3   |    queue is empty     |              |         |    v    |    v     |         |
 |  C4   |     queue is full     |              |    v    |         |          |    v    |
 
 #### (c) Partition the characteristics into blocks. Designate one block in each partition as the "Base" block.
 
-|    Method    | Characteristic | Base  |  Test Requirements   | Infeasible TRs | Revised TRs | # TRs |
-| :----------: | :------------: | :---: | :------------------: | :------------: | :---------: | :---: |
-| BoundedQueue |       C1       |   T   |        {T, F}        |                |             |   2   |
-|   enqueue    |    C1 C2 C4    |  TTF  | {TTF, FTF, TFF, TTT} |      FTF       | FTF -> FFF  |   4   |
-|   dequeue    |    C1 C2 C3    |  TTF  | {TTF, FTF, TFF, TTT} |      FTF       | FTF -> FFF  |   4   |
-|   is_empty   |     C1 C3      |  TT   |     {TT, FT, TF}     |       FT       |  FT -> FF   |   3   |
-|   is_f_ull   |     C1 C4      |  TT   |     {TT, FT, TF}     |       FT       |  FT -> FF   |   3   |
+|    Method    | Characteristic | Base  | Test Requirements | Infeasible TRs | Revised TRs | # TRs |
+| :----------: | :------------: | :---: | :---------------: | :------------: | :---------: | :---: |
+| BoundedQueue |       C1       |   T   |      {T, F}       |                |             |   2   |
+|   enqueue    |     C2 C4      |  TF   |   {TF, FF, TT}    |                |             |   3   |
+|   dequeue    |     C2 C3      |  TF   |   {TF, FF, TT}    |       FF       |             |   2   |
+|   is_empty   |       C3       |   F   |      {T, F}       |                |             |   2   |
+|   is_full    |       C4       |   F   |      {T, F}       |                |             |   2   |
 
 #### (d) Define values for each block.
 
-|    Method    |  C1   |  C2   |  C3   |  C4   | Values                                       |
-| :----------: | :---: | :---: | :---: | :---: | :------------------------------------------- |
-| BoundedQueue |   T   |       |       |       | BoundedQueue(0)                              |
-|              |   F   |       |       |       | BoundedQueue(-1)                             |
-|   enqueue    |   T   |   T   |       |   F   | BoundedQueue(1), enqueue("obj1")             |
-|              |   F   |   F   |       |   F   | BoundedQueue(-1), enqueue("obj1")            |
-|              |   T   |   F   |       |   F   | BoundedQueue(1), enqueue(None)               |
-|              |   T   |   T   |       |   T   | BoundedQueue(0), enqueue("obj1")             |
-|   dequeue    |   T   |   T   |   F   |       | BoundedQueue(1), enqueue("obj1"), dequeue()  |
-|              |   F   |   F   |   F   |       | BoundedQueue(-1), enqueue("obj1"), dequeue() |
-|              |   T   |   F   |   F   |       | BoundedQueue(1), enqueue(None), dequeue()    |
-|              |   T   |   T   |   T   |       | BoundedQueue(1), dequeue()                   |
-|   is_empty   |   T   |       |   T   |       | BoundedQueue(0), is_empty()                  |
-|              |   F   |       |   F   |       | BoundedQueue(-1), is_empty()                 |
-|              |   T   |       |   F   |       | BoundedQueue(1), enqueue("obj1"), is_empty() |
-|   is_full    |   T   |       |       |   T   | BoundedQueue(0), is_full()                   |
-|              |   F   |       |       |   F   | BoundedQueue(-1), is_full()                  |
-|              |   T   |       |       |   F   | BoundedQueue(1), is_full()                   |
+|    Method    |  C1   |  C2   |  C3   |  C4   | Values                                          |
+| :----------: | :---: | :---: | :---: | :---: | :---------------------------------------------- |
+| BoundedQueue |   T   |       |       |       | BoundedQueue(2)                                 |
+|              |   F   |       |       |       | BoundedQueue(-1)                                |
+|   enqueue    |       |   T   |       |   F   | capacity = 2, ["obj1"],  enqueue("obj2")        |
+|              |       |   F   |       |   F   | capacity = 2, ["obj1"], enqueue(None)           |
+|              |       |   T   |       |   T   | capacity = 2, ["obj1", "obj2"], enqueue("obj3") |
+|   dequeue    |       |   T   |   F   |       | capacity = 2, ["obj1"], dequeue()               |
+|              |       |   T   |   T   |       | capacity = 2, [], dequeue()                     |
+|   is_empty   |       |       |   F   |       | capacity = 2, ["obj1"], is_empty()              |
+|              |       |       |   T   |       | capacity = 2, [], is_empty()                    |
+|   is_full    |       |       |       |   F   | capacity = 2, ["obj1"], is_full()               |
+|              |       |       |       |   T   | capacity = 2, ["obj1", "obj2"], is_full()       |
     
 
 #### (e) Define a test set that satisfies Base Choice Coverage (BCC). Write your tests with the values from the previous step. Be sure to include the test oracles.
