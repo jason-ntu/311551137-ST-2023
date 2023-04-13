@@ -45,7 +45,7 @@ class CSS:
 
     def add_course(self, course):
         self.__check_course_format(course)
-        if self.check_course_exist(course) == False:
+        if self.check_course_exist(course) is False:
             return False
         for cus in self.__courses:
             if not (cus[1] != course[1] or cus[3] < course[2] or cus[2] > course[3]):
@@ -55,9 +55,9 @@ class CSS:
 
     def remove_course(self, course):
         self.__check_course_format(course)
-        if self.check_course_exist(course) == False:
+        if self.check_course_exist(course) is False:
             return False
-        if not course in self.__courses:
+        if not (course in self.__courses):
             return False
         self.__courses.remove(course)
         return True
