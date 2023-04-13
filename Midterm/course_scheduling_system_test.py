@@ -99,3 +99,7 @@ class CSSTest(unittest.TestCase):
         # line 58
         course = ('Algorithms', 'Monday', 3, 4)
         self.assertFalse(self.css.remove_course(course))
+
+
+if __name__ == "__main__":
+    unittest.main()
