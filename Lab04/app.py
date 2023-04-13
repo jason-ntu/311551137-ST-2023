@@ -29,7 +29,7 @@ news = wait.until(EC.presence_of_element_located((By.LINK_TEXT, '新聞')))
 news.click()
 
 all_news = wait.until(EC.presence_of_all_elements_located(
-    (By.CSS_SELECTOR, '.su-post > a')))
+    (By.CSS_SELECTOR, '.select > a')))
 all_news[0].click()
 
 title = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'h1')))
