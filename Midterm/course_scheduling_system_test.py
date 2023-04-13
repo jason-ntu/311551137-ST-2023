@@ -12,7 +12,6 @@ class CSSTest(unittest.TestCase):
     # Let check_course_exist return True by mocking(Stub).
     @patch.object(CSS, "check_course_exist", return_value=True)
     def test_q1_1(self, mock_check_course_exist):
-
         # Try to add one course by add_course, check its return value
         course = ('Algorithms', 'Monday', 3, 4)
         self.assertTrue(self.css.add_course(course))
@@ -20,6 +19,7 @@ class CSSTest(unittest.TestCase):
         # Verify the result by get_course_list.
         course_list = self.css.get_course_list()
         self.assertEqual(len(course_list), 1)
+        self.assertEqual(course_list[0], course)
 
     # Let check_course_exist return True by mocking.
     @patch.object(CSS, "check_course_exist", return_value=True)
@@ -46,14 +46,10 @@ class CSSTest(unittest.TestCase):
     @patch.object(CSS, "check_course_exist", return_value=True)
     def test_q1_4(self, mock_check_course_exist):
         # Try to add a invalid course input, and check the Exception raised.
-        invalid_course_len_3 = ('Algorithms', 'Monday', 3)
-        invalid_course_first_not_str = (3, 4, 'Algorithms', 'Monday')
-        invalid_course_not_in_workdays = ('Algorithms', 'Sunday', 3, 4)
-        invalid_course_reversed_time = ('Algorithms', 'Monday', 4, 3)
-        courses = [invalid_course_len_3,
-                   invalid_course_first_not_str,
-                   invalid_course_not_in_workdays,
-                   invalid_course_reversed_time]
+        courses = [('Algorithms', 'Monday', 3),
+                   (3, 4, 'Algorithms', 'Monday'),
+                   ('Algorithms', 'Sunday', 3, 4),
+                   ('Algorithms', 'Monday', 4, 3)]
         for course in courses:
             with self.subTest():
                 with self.assertRaisesRegex(TypeError, ''):
@@ -63,21 +59,21 @@ class CSSTest(unittest.TestCase):
     @patch.object(CSS, "check_course_exist", return_value=True)
     def test_q1_5(self, mock_check_course_exist):
         # Add three courses that don’t overlapp with each other
-        course_on_mon = ('Algorithms', 'Monday', 3, 4)
-        course_on_tues = ('Algorithms', 'Tuesday', 3, 4)
-        course_on_wed = ('Algorithms', 'Wednesday', 3, 4)
-        self.assertTrue(self.css.add_course(course_on_mon))
-        self.assertTrue(self.css.add_course(course_on_tues))
-        self.assertTrue(self.css.add_course(course_on_wed))
+        courses = [('Algorithms', 'Monday', 3, 4),
+                   ('Algorithms', 'Tuesday', 3, 4),
+                   ('Algorithms', 'Wednesday', 3, 4)]
+        self.assertTrue(self.css.add_course(courses[0]))
+        self.assertTrue(self.css.add_course(courses[1]))
+        self.assertTrue(self.css.add_course(courses[2]))
 
         # Remove the second one by remove_course
-        self.assertTrue(self.css.remove_course(course_on_tues))
+        self.assertTrue(self.css.remove_course(courses[1]))
 
         # Verify the result
         course_list = self.css.get_course_list()
         self.assertEqual(len(course_list), 2)
-        self.assertEqual(course_list[0], course_on_mon)
-        self.assertEqual(course_list[1], course_on_wed)
+        self.assertEqual(course_list[0], courses[0])
+        self.assertEqual(course_list[1], courses[2])
 
         # Check the call count of check_course_exist
         self.assertEqual(mock_check_course_exist.call_count, 4)
@@ -89,14 +85,13 @@ class CSSTest(unittest.TestCase):
     # course_scheduling_system.py. You can mock check_course_exist
     # and use pragma to excluding check_course_exist from coverage analysis.
     @patch.object(CSS, "check_course_exist", return_value=False)
-    def test_q1_6_1(self, mock_check_course_exist):
+    def test_q1_6(self, mock_check_course_exist):
         # line 56
         course = ('Algorithms', 'Monday', 3, 4)
         self.assertFalse(self.css.remove_course(course))
 
-    @patch.object(CSS, "check_course_exist", return_value=True)
-    def test_q1_6_2(self, mock_check_course_exist):
         # line 58
+        mock_check_course_exist.return_value = True
         course = ('Algorithms', 'Monday', 3, 4)
         self.assertFalse(self.css.remove_course(course))
 
