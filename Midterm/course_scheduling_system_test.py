@@ -83,7 +83,7 @@ class CSSTest(unittest.TestCase):
         self.assertEqual(mock_check_course_exist.call_count, 4)
 
         # Print out the schedule in a formatted way.
-        print(course_list)
+        print(self.css)
 
     # Add some more(possibly 0) tests to achieve 100 % coverage of
     # course_scheduling_system.py. You can mock check_course_exist
@@ -101,5 +101,5 @@ class CSSTest(unittest.TestCase):
         self.assertFalse(self.css.remove_course(course))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma no cover
     unittest.main()
