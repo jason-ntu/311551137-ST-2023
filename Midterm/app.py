@@ -13,7 +13,7 @@ options.add_argument('--window-size=1920,1080')
 options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           # remove options if running locally
-                          # options=options
+                          options=options
                           )
 
 PYTHON_URL = 'https://docs.python.org/3/tutorial/index.html'
