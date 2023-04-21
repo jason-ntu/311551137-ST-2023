@@ -15,9 +15,9 @@ options.add_argument('--headless')
 options.add_argument('--window-size=1920,1080')
 options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
-                          options=options)
-# remove options if running locally
-# i.e. driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+                          # remove options if running locally
+                          options=options
+                          )
 
 wait = WebDriverWait(driver, 5)
 
