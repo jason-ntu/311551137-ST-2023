@@ -8,4 +8,4 @@ valgrind:
 
 ASan:
 	gcc -fsanitize=address $(FILE)
-	./a.out
+	ASAN_OPTIONS=detect_stack_use_after_return=1 ./a.out
