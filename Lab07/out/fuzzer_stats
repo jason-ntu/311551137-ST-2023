@@ -1,9 +1,9 @@
-start_time        : 1682592816
-last_update       : 1682592845
-fuzzer_pid        : 2912
+start_time        : 1682593206
+last_update       : 1682593242
+fuzzer_pid        : 2049
 cycles_done       : 0
-execs_done        : 324
-execs_per_sec     : 8.34
+execs_done        : 409
+execs_per_sec     : 10.23
 paths_total       : 6
 paths_favored     : 1
 paths_found       : 5
@@ -17,14 +17,14 @@ stability         : 100.00%
 bitmap_cvg        : 0.02%
 unique_crashes    : 1
 unique_hangs      : 0
-last_path         : 1682592840
-last_crash        : 1682592839
+last_path         : 1682593228
+last_crash        : 1682593227
 last_hang         : 0
-execs_since_crash : 106
-exec_timeout      : 240
+execs_since_crash : 190
+exec_timeout      : 200
 afl_banner        : bmpgrayscale
 afl_version       : 2.57b
 target_mode       : default
 command_line      : ./AFL/afl-fuzz -i in -o out -m none -- ./bmpgrayscale @@ a.bmp
-slowest_exec_ms   : 240
+slowest_exec_ms   : 200
 peak_rss_mb       : 4
