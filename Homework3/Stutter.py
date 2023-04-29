@@ -44,11 +44,13 @@ class Stutter:
 			while i < len(inLine): # for each character
 				c = inLine[i]
 				if Stutter.isDelimit(c): # Found an end of a word.
+					print("input1: ", linecnt)
 					Stutter.checkDupes(linecnt)
 				else:
 					Stutter.lastdelimit = False
 					Stutter.curWord += c
 				i += 1
+			print("input2: ", linecnt)
 			Stutter.checkDupes(linecnt)
 			linecnt += 1
 

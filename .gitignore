@@ -1,5 +1,7 @@
 ./vscode
 
+*/*.o
+*/*.out
 */.coverage
 */htmlcov/
 */__pycache__/

@@ -1,6 +1,5 @@
 import unittest
 import Students
-from contextlib import redirect_stdout
 import io
 
 buf = io.StringIO()
