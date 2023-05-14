@@ -21,3 +21,5 @@ Note: This will take a few minutes the first time you do it, but will be much fa
 ![Lab05 workflow](https://github.com/jason-ntu/311551137-ST-2023/actions/workflows/Lab05-CI.yml/badge.svg)
 
 ![Midterm workflow](https://github.com/jason-ntu/311551137-ST-2023/actions/workflows/Midterm-CI.yml/badge.svg)
+
+![Lab08 workflow](https://github.com/jason-ntu/311551137-ST-2023/actions/workflows/Lab08-CI.yml/badge.svg)
