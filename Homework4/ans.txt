@@ -1,0 +1,11 @@
+(a) How many mutants are there?
+237
+
+(b) How many test cases do you need to kill the non-equivalent mutants?
+10
+
+(c) What mutation score were you able to achieve before analyzing for equivalent mutants?
+88.0%
+
+(d) How many equivalent mutants are there?
+27
