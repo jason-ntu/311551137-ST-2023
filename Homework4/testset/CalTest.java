@@ -2,13 +2,13 @@
 // 237
 
 // (b) How many test cases do you need to kill the non-equivalent mutants?
-// 10
+// 11
 
 // (c) What mutation score were you able to achieve before analyzing for equivalent mutants?
-// 88.0%
+// 89.0%
 
 // (d) How many equivalent mutants are there?
-// 27
+// 26
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,5 +72,11 @@ public class CalTest {
     @Test
     public void test10() {
         Assert.assertEquals(0, Cal.cal(1, 1, 5, 1, -100));
+    }
+
+    // if (m4 != 0 || m100 <= 0 && m400 != 0)
+    @Test
+    public void test11() {
+        Assert.assertEquals(0, Cal.cal(1, 1, 5, 1, -4));
     }
 }
